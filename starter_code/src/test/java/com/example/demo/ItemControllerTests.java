@@ -75,6 +75,20 @@ public class ItemControllerTests {
     }
 
     @Test
+    public void validate_BadItemIdFails() {
+        Long id = 1L;
+        Item item = new Item();
+        item.setId(id);
+        item.setName("Test");
+        item.setDescription("Test Description");
+        item.setPrice(new BigDecimal(1));
+
+        ResponseEntity<Item> response = itemController.getItemById(id);
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
+    }
+
+    @Test
     public void validate_GetItemByName() {
         Long id = 1L;
         Item item = new Item();

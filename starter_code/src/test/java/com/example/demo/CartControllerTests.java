@@ -66,6 +66,30 @@ public class CartControllerTests {
     }
 
     @Test
+    public void validate_BadUsernameFails() throws Exception {
+        ModifyCartRequest r = new ModifyCartRequest();
+        r.setQuantity(3);
+        r.setItemId(1);
+        r.setUsername("Alex");
+
+        ResponseEntity<Cart> response = cartController.addTocart(r);
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void validate_BadItemIdFails() throws Exception {
+        ModifyCartRequest r = new ModifyCartRequest();
+        r.setQuantity(3);
+        r.setItemId(2);
+        r.setUsername("Andrew");
+
+        ResponseEntity<Cart> response = cartController.addTocart(r);
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
+    }
+
+    @Test
     public void validate_RemoveFromCart() throws Exception {
         ModifyCartRequest r = new ModifyCartRequest();
         r.setQuantity(3);
@@ -75,5 +99,29 @@ public class CartControllerTests {
         ResponseEntity<Cart> response = cartController.removeFromcart(r);
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void validate_BadUsernameRemoveFails() throws Exception {
+        ModifyCartRequest r = new ModifyCartRequest();
+        r.setQuantity(3);
+        r.setItemId(1);
+        r.setUsername("Alex");
+
+        ResponseEntity<Cart> response = cartController.removeFromcart(r);
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void validate_BadItemIdRemoveFails() throws Exception {
+        ModifyCartRequest r = new ModifyCartRequest();
+        r.setQuantity(3);
+        r.setItemId(2);
+        r.setUsername("Andrew");
+
+        ResponseEntity<Cart> response = cartController.removeFromcart(r);
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
     }
 }
