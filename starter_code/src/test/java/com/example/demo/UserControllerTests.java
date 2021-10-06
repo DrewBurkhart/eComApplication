@@ -54,6 +54,30 @@ public class UserControllerTests {
     }
 
     @Test
+    public void validate_PasswordTooShortFails() throws Exception {
+        CreateUserRequest r = new CreateUserRequest();
+        r.setUsername("Andrew");
+        r.setPassword("pass");
+        r.setConfirmPassword("pass");
+
+        final ResponseEntity<User> response = userController.createUser(r);
+        assertNotNull(response);
+        assertEquals(400, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void validate_PasswordConfirmationNotMatchingFails() throws Exception {
+        CreateUserRequest r = new CreateUserRequest();
+        r.setUsername("Andrew");
+        r.setPassword("password");
+        r.setConfirmPassword("password1");
+
+        final ResponseEntity<User> response = userController.createUser(r);
+        assertNotNull(response);
+        assertEquals(400, response.getStatusCodeValue());
+    }
+
+    @Test
     public void validate_GetUserById() throws Exception {
         Long id = 1L;
         User user = new User();

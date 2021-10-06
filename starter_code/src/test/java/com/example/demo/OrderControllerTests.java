@@ -69,6 +69,13 @@ public class OrderControllerTests {
     }
 
     @Test
+    public void validate_BadUsernameFails() {
+        ResponseEntity<UserOrder> response = orderController.submit("Alex");
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
+    }
+
+    @Test
     public void validate_History() {
         ResponseEntity<UserOrder> response = orderController.submit("Andrew");
         assertNotNull(response);
@@ -83,5 +90,12 @@ public class OrderControllerTests {
         UserOrder order = orders.get(0);
         assertEquals("Andrew", order.getUser().getUsername());
         assertEquals(1, order.getItems().size());
+    }
+
+    @Test
+    public void validate_BadUsernameHistoryFails() {
+        ResponseEntity<List<UserOrder>> response = orderController.getOrdersForUser("Alex");
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
     }
 }
